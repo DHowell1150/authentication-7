@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root "welcome#index"
-  resources :users, only: [:new, :create]
+  resources :users, only: [:show, :new, :create]
   get "/login", to: "users#login_form"
   post "/login", to: "users#login"
 end
