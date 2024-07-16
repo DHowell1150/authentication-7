@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    # @user = User.find(params[:user])
+    @user = User.find(params[:id])
   end
 
   def new
@@ -8,15 +8,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = user_params
-    new_user = User.new(user)
+    new_user = User.new(user_params)
     if new_user.save #&& user_params[:password] == user_params[:confirmation_password]
       session[:user_id] = new_user.id
       flash[:success] = "Welcome, #{new_user.username}!"
       redirect_to root_path
     else 
       flash[:error] = "Sorry, username or password is incorrect"
-      redirect_to new_user_path
+      redirect_to new_user_path # render :new
     end
   end
 
@@ -31,12 +30,12 @@ class UsersController < ApplicationController
       redirect_to user_path(user)
     else
       flash[:error] = "Sorry, your credentials are bad."
-      redirect_to root_path
+      redirect_to login_path
     end
   end
   
   private
   def user_params
-    params.require(:user).permit(:username, :password, :confirmation_password)
+    params.require(:user).permit(:username, :password, :password_confirmation)
   end
 end

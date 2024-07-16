@@ -15,18 +15,17 @@ RSpec.describe "User registration form" do
       
       fill_in :user_username, with: username
       fill_in :user_password, with: password
-      fill_in :user_confirmation_password, with: correct_password
+      fill_in :user_password_confirmation, with: correct_password
 
       click_on "Create User"
 
-      # expect(current_path).to eq(user_path())
+      expect(current_path).to eq(root_path)
       expect(page).to have_content("Welcome, #{username}!")
     end
   end
 
   describe "SAD PATHS" do 
-    it "needs correct login information" do 
-
+    it "needs password and confirmation_password to match" do 
       visit root_path
       
       click_on "Register as a User"
@@ -40,7 +39,7 @@ RSpec.describe "User registration form" do
       
       fill_in :user_username, with: username
       fill_in :user_password, with: password
-      fill_in :user_confirmation_password, with: incorrect_password
+      fill_in :user_password_confirmation, with: incorrect_password
       
       click_on "Create User"
       
